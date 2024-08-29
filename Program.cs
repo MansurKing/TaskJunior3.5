@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace TaskJunior3._5
 {
@@ -8,56 +8,50 @@ namespace TaskJunior3._5
         {
             Random random = new Random();
 
-            int firstValueRandom = 0;
-            int finishValueRandom = 10;
+            int minValue = 0;
+            int maxValue = 9;
 
-            int numberOfNumbers = 30;
-            int[] numbers = new int[numberOfNumbers];
+            int arraySize = 30;
+            int[] numbers = new int[arraySize];
             int lastNumberIndex = numbers.Length - 1;
 
-            int baseNumbersInARow = 1;
-            int numbersInARow = 1;
-            int recurringNumber = 0;
-
+            int maxCount = 0;
+            int maxNumber = 0;
 
             Console.WriteLine(numbers.Length + " - кол-во элементов в самом массиве.\n\nМассив:\n");
 
             for (int i = 0; i < numbers.Length; i++)
             {
-                numbers[i] = random.Next(firstValueRandom, finishValueRandom);
+                numbers[i] = random.Next(minValue, maxValue + 1);
                 Console.Write(numbers[i] + " ");
             }
 
-            Console.WriteLine("\n\nПоиск повторяющихся чисел:\n");
-
-            for (int i = 0; i < lastNumberIndex; i++)
+            for (int i = 0; i < numbers.Length - 1; i++)
             {
-                if (numbers[i] == numbers[i + 1])
-                {
-                    numbersInARow++;
+                int count = 1;
 
-                    if (numbersInARow >= baseNumbersInARow)
+                for (int j = i + 1; j < numbers.Length; j++)
+                {
+                    if (numbers[i] == numbers[j])
                     {
-                        recurringNumber = numbers[i];
-                        baseNumbersInARow = numbersInARow;
+                        count++;
                     }
-                    else
+                    else if (count > maxCount)
                     {
-                        numbersInARow = 1;
+                        maxCount = count;
+                        maxNumber = numbers[i];
                     }
+                }
+
+                if (count > maxCount)
+                {
+                    maxCount = count;
+                    maxNumber = numbers[i];
                 }
             }
 
-            if (baseNumbersInARow > 1)
-            {
-                Console.WriteLine($"\nЧисло {recurringNumber} повторяется {baseNumbersInARow} раз/а подряд.");
-            }
-            else
-            {
-                Console.WriteLine("\nНет повторяющихся подряд чисел.");
-            }
+            Console.WriteLine("\n\nЧисло, которое повторяется подряд: " + maxNumber);
+            Console.WriteLine("Количество повторений: " + maxCount);
         }
     }
 }
-
-
